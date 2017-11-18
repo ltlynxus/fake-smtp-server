@@ -27,20 +27,16 @@
 
             <div>
                 <ul class="nav nav-tabs" role="tablist">
-<!--                     <li role="presentation" th:classappend="${mail.contentType.name() == 'HTML'} ? 'active' : ''" th:if="${mail.contentType.name() == 'HTML'}"><a href="#mail-content-html" aria-controls="mail-content-html" role="tab" data-toggle="tab">HTML</a></li> -->
-<!--                     <li role="presentation" th:classappend="${mail.contentType.name() == 'HTML'} ? '' : 'active'" th:if="${mail.contentType.name() != 'HTML'}"><a href="#mail-content-plain" aria-controls="mail-content-plain" role="tab" data-toggle="tab">Plain</a></li> -->
-                    <li role="presentation"><a href="#mail-content-raw" aria-controls="mail-content-raw" role="tab" data-toggle="tab">Raw</a></li>
+                    <li role="presentation" ><a href="#mail-content-parsed" aria-controls="mail-content-parsed" role="tab" data-toggle="tab">Parsed</a></li>
+                    <li role="presentation" class="active"><a href="#mail-content-raw" aria-controls="mail-content-raw" role="tab" data-toggle="tab">Raw</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-<!--                     <div role="tabpanel" class="tab-pane" id="mail-content-html" th:classappend="${mail.contentType.name() == 'HTML'} ? 'active' : ''" th:if="${mail.contentType.name() == 'HTML'}"> -->
-<!--                         <div class="panel-body" th:utext="${mail.content}"></div> -->
-<!--                     </div> -->
-<!--                     <div role="tabpanel" class="tab-pane" id="mail-content-plain" th:classappend="${mail.contentType.name() == 'HTML'} ? '' : 'active'" th:if="${mail.contentType.name() != 'HTML'}"> -->
-<!--                         <div class="panel-body" th:text="${mail.content}"></div> -->
-<!--                     </div> -->
-                    <div role="tabpanel" class="tab-pane" id="mail-content-raw">
+                    <div role="tabpanel" class="tab-pane" id="mail-content-parsed">
+                        <div>Nothing yet</div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="mail-content-raw">
                         <pre th:text="${mail.rawData}"></pre>
                     </div>
                 </div>

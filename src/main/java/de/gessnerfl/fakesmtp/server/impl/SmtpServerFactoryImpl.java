@@ -1,24 +1,30 @@
 package de.gessnerfl.fakesmtp.server.impl;
 
-import de.gessnerfl.fakesmtp.server.SmtpServer;
-import de.gessnerfl.fakesmtp.server.SmtpServerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.subethamail.smtp.helper.SimpleMessageListenerAdapter;
 import org.subethamail.smtp.server.SMTPServer;
 
+import de.gessnerfl.fakesmtp.server.SmtpServer;
+import de.gessnerfl.fakesmtp.server.SmtpServerFactory;
+
 @Profile("default")
 @Service
 public class SmtpServerFactoryImpl implements SmtpServerFactory {
 
-    private final EmailPersister emailPersister;
-    private final SmtpServerConfigurator configurator;
+    private EmailPersister emailPersister;
+    
+    private SmtpServerConfigurator configurator;
 
     @Autowired
-    public SmtpServerFactoryImpl(EmailPersister emailPersister, SmtpServerConfigurator configurator) {
-        this.emailPersister = emailPersister;
-        this.configurator = configurator;
+    public void setEmailPersister(EmailPersister emailPersister) {
+    	this.emailPersister = emailPersister;
+    }
+    
+    @Autowired
+    public void setConfigurator(SmtpServerConfigurator configurator) {
+    	this.configurator = configurator;
     }
 
     @Override
@@ -28,4 +34,5 @@ public class SmtpServerFactoryImpl implements SmtpServerFactory {
         configurator.configure(smtpServer);
         return new SmtpServerImpl(smtpServer);
     }
+	
 }

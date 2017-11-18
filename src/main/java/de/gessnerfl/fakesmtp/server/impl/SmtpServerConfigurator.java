@@ -11,15 +11,25 @@ import org.subethamail.smtp.server.SMTPServer;
 @Service
 public class SmtpServerConfigurator {
 
-    private final FakeSmtpConfigurationProperties fakeSmtpConfigurationProperties;
-    private final BasicUsernamePasswordValidator basicUsernamePasswordValidator;
-    private final Logger logger;
+    private FakeSmtpConfigurationProperties fakeSmtpConfigurationProperties;
+    
+    private BasicUsernamePasswordValidator basicUsernamePasswordValidator;
+    
+    private Logger logger;
 
     @Autowired
-    public SmtpServerConfigurator(FakeSmtpConfigurationProperties fakeSmtpConfigurationProperties, BasicUsernamePasswordValidator basicUsernamePasswordValidator, Logger logger) {
-        this.fakeSmtpConfigurationProperties = fakeSmtpConfigurationProperties;
-        this.basicUsernamePasswordValidator = basicUsernamePasswordValidator;
-        this.logger = logger;
+    public void setFakeSmtpConfigurationProperties(FakeSmtpConfigurationProperties fakeSmtpConfigurationProperties) {
+    	this.fakeSmtpConfigurationProperties = fakeSmtpConfigurationProperties;
+    }
+    
+    @Autowired
+    public void setBasicUsernamePasswordValidator(BasicUsernamePasswordValidator basicUsernamePasswordValidator) {
+    	this.basicUsernamePasswordValidator = basicUsernamePasswordValidator;
+    }
+    
+    @Autowired
+    public void setLogger(Logger logger) {
+    	this.logger = logger;
     }
 
     public void configure(SMTPServer smtpServer) {

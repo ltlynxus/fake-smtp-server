@@ -9,15 +9,15 @@ import javax.annotation.PreDestroy;
 @Service
 public class EmailServer {
 
-    private final SmtpServerFactory smtpServerFactory;
+    private SmtpServerFactory smtpServerFactory;
 
     SmtpServer smtpServer;
 
     @Autowired
-    public EmailServer(SmtpServerFactory smtpServerFactory) {
-        this.smtpServerFactory = smtpServerFactory;
+    public void setSmtpServerFactory(SmtpServerFactory smtpServerFactory) {
+    	this.smtpServerFactory = smtpServerFactory;
     }
-
+    
     @PostConstruct
     public void startServer() {
         smtpServer = smtpServerFactory.create();

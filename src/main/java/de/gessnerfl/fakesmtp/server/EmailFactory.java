@@ -21,11 +21,11 @@ import de.gessnerfl.fakesmtp.util.TimestampProvider;
 public class EmailFactory {
     public static final String UNDEFINED = "<undefined>";
 
-    private final TimestampProvider timestampProvider;
-
+    private TimestampProvider timestampProvider;
+    
     @Autowired
-    public EmailFactory(TimestampProvider timestampProvider) {
-        this.timestampProvider = timestampProvider;
+    public void setTimestampProvider(TimestampProvider timestampProvider) {
+    	this.timestampProvider = timestampProvider;
     }
 
     public Email convert(String from, String to, InputStream data) throws IOException {
