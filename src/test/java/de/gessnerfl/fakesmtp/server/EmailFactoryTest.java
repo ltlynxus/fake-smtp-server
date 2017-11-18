@@ -1,9 +1,13 @@
 package de.gessnerfl.fakesmtp.server;
 
-import de.gessnerfl.fakesmtp.TestResourceUtil;
-import de.gessnerfl.fakesmtp.model.ContentType;
-import de.gessnerfl.fakesmtp.model.Email;
-import de.gessnerfl.fakesmtp.util.TimestampProvider;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,13 +15,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import de.gessnerfl.fakesmtp.TestResourceUtil;
+import de.gessnerfl.fakesmtp.model.Email;
+import de.gessnerfl.fakesmtp.util.TimestampProvider;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailFactoryTest {
@@ -48,9 +48,7 @@ public class EmailFactoryTest {
         assertEquals(RECEIVER, result.getToAddress());
         assertEquals("This is the mail title", result.getSubject());
         assertEquals(rawData, result.getRawData());
-        assertEquals("This is the message content", result.getContent());
         assertEquals(now, result.getReceivedOn());
-        assertEquals(ContentType.PLAIN, result.getContentType());
     }
 
     @Test
@@ -68,9 +66,7 @@ public class EmailFactoryTest {
         assertEquals(RECEIVER, result.getToAddress());
         assertEquals("This is the mail title", result.getSubject());
         assertEquals(rawData, result.getRawData());
-        assertEquals("<html><head></head><body>Mail Body</body></html>", result.getContent());
         assertEquals(now, result.getReceivedOn());
-        assertEquals(ContentType.HTML, result.getContentType());
     }
 
     @Test
@@ -88,9 +84,7 @@ public class EmailFactoryTest {
         assertEquals(RECEIVER, result.getToAddress());
         assertEquals("This is the mail title", result.getSubject());
         assertEquals(rawData, result.getRawData());
-        assertEquals("This is the message content", result.getContent());
         assertEquals(now, result.getReceivedOn());
-        assertEquals(ContentType.PLAIN, result.getContentType());
     }
 
     @Test
@@ -108,9 +102,7 @@ public class EmailFactoryTest {
         assertEquals(RECEIVER, result.getToAddress());
         assertEquals(EmailFactory.UNDEFINED, result.getSubject());
         assertEquals(rawData, result.getRawData());
-        assertEquals("This is the message content", result.getContent());
         assertEquals(now, result.getReceivedOn());
-        assertEquals(ContentType.PLAIN, result.getContentType());
     }
 
     @Test
@@ -127,8 +119,6 @@ public class EmailFactoryTest {
         assertEquals(RECEIVER, result.getToAddress());
         assertEquals(EmailFactory.UNDEFINED, result.getSubject());
         assertEquals(rawData, result.getRawData());
-        assertEquals(rawData, result.getContent());
         assertEquals(now, result.getReceivedOn());
-        assertEquals(ContentType.PLAIN, result.getContentType());
     }
 }

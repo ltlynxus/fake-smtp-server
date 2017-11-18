@@ -1,9 +1,15 @@
 package de.gessnerfl.fakesmtp.server.impl;
 
-import de.gessnerfl.fakesmtp.TestResourceUtil;
-import de.gessnerfl.fakesmtp.model.Email;
-import de.gessnerfl.fakesmtp.repository.EmailRepository;
-import de.gessnerfl.fakesmtp.server.EmailFactory;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,13 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
+import de.gessnerfl.fakesmtp.TestResourceUtil;
+import de.gessnerfl.fakesmtp.model.Email;
+import de.gessnerfl.fakesmtp.repository.EmailRepository;
+import de.gessnerfl.fakesmtp.server.EmailFactory;
 
 @ActiveProfiles("integrationtest")
 @RunWith(SpringRunner.class)
@@ -56,7 +59,6 @@ public class EmailPersisterIntegrationTest {
         assertEquals(RECEIVER, mail.getToAddress());
         assertEquals("This is the mail title", mail.getSubject());
         assertEquals(rawData, mail.getRawData());
-        assertEquals("This is the message content", mail.getContent());
         assertNotNull(mail.getReceivedOn());
     }
 
@@ -78,7 +80,6 @@ public class EmailPersisterIntegrationTest {
         assertEquals(RECEIVER, mail.getToAddress());
         assertEquals(EmailFactory.UNDEFINED, mail.getSubject());
         assertEquals(rawData, mail.getRawData());
-        assertEquals("This is the message content", mail.getContent());
         assertNotNull(mail.getReceivedOn());
     }
 
@@ -99,7 +100,6 @@ public class EmailPersisterIntegrationTest {
         assertEquals(RECEIVER, mail.getToAddress());
         assertEquals(EmailFactory.UNDEFINED, mail.getSubject());
         assertEquals(rawData, mail.getRawData());
-        assertEquals(rawData, mail.getContent());
         assertNotNull(mail.getReceivedOn());
     }
 }

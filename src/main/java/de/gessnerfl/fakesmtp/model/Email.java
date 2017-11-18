@@ -33,16 +33,6 @@ public class Email {
     @Basic(optional = false)
     private String rawData;
 
-    @Lob
-    @Column(name="content", nullable = false)
-    @Basic(optional = false)
-    private String content;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name="content_type", nullable = false)
-    @Basic(optional = false)
-    private ContentType contentType;
-
     public Long getId() {
         return id;
     }
@@ -89,22 +79,6 @@ public class Email {
 
     public String getRawData() {
         return rawData;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public ContentType getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
     }
 
     @Override

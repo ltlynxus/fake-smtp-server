@@ -1,19 +1,21 @@
 package de.gessnerfl.fakesmtp.server;
 
-import de.gessnerfl.fakesmtp.model.ContentType;
-import de.gessnerfl.fakesmtp.model.Email;
-import de.gessnerfl.fakesmtp.util.TimestampProvider;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import de.gessnerfl.fakesmtp.model.Email;
+import de.gessnerfl.fakesmtp.util.TimestampProvider;
 
 @Service
 public class EmailFactory {
@@ -31,30 +33,21 @@ public class EmailFactory {
         try {
             Session s = Session.getDefaultInstance(new Properties());
             MimeMessage mimeMessage = new MimeMessage(s, new ByteArrayInputStream(rawData.getBytes(StandardCharsets.UTF_8)));
-            ContentType contentType = mimeMessage.getContentType().startsWith("text/html") ? ContentType.HTML : ContentType.PLAIN;
             String subject = mimeMessage.getSubject() != null ? mimeMessage.getSubject() : UNDEFINED;
-            String content = extractContent(mimeMessage.getContent(), rawData);
-            return createEmail(from, to, subject, rawData, content, contentType);
+            return createEmail(from, to, subject, rawData);
         } catch (MessagingException e) {
             data.reset();
-            return createEmail(from, to, UNDEFINED, rawData, rawData, ContentType.PLAIN);
+            return createEmail(from, to, UNDEFINED, rawData);
         }
     }
 
-    private String extractContent(Object content, String rawData) throws IOException, MessagingException {
-        String data = content != null ? content.toString().trim() : null;
-        return StringUtils.isEmpty(data) ? rawData : data;
-    }
-
-    private Email createEmail(String from, String to, String subject, String rawData, String content, ContentType contentType){
+    private Email createEmail(String from, String to, String subject, String rawData){
         Email email = new Email();
         email.setFromAddress(from);
         email.setToAddress(to);
         email.setReceivedOn(timestampProvider.now());
         email.setSubject(subject);
         email.setRawData(rawData);
-        email.setContent(content);
-        email.setContentType(contentType);
         return email;
     }
 

@@ -1,7 +1,15 @@
 package de.gessnerfl.fakesmtp.repository;
 
-import de.gessnerfl.fakesmtp.model.ContentType;
-import de.gessnerfl.fakesmtp.model.Email;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,14 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.List;
-
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
+import de.gessnerfl.fakesmtp.model.Email;
 
 @ActiveProfiles("integrationtest")
 @RunWith(SpringRunner.class)
@@ -80,11 +81,9 @@ public class EmailRepositoryIntegrationTest {
         Email mail = new Email();
         mail.setSubject("Test Subject "+randomToken);
         mail.setRawData("Test Content "+randomToken);
-        mail.setContent("Test Content "+randomToken);
         mail.setReceivedOn(receivedOn);
         mail.setFromAddress("sender@example.com");
         mail.setToAddress("receiver@example.com");
-        mail.setContentType(ContentType.PLAIN);
         return sut.save(mail);
     }
 

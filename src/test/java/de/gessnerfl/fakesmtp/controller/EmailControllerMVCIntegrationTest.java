@@ -1,8 +1,19 @@
 package de.gessnerfl.fakesmtp.controller;
 
-import de.gessnerfl.fakesmtp.model.ContentType;
-import de.gessnerfl.fakesmtp.model.Email;
-import de.gessnerfl.fakesmtp.repository.EmailRepository;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyIterableOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.iterableWithSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -17,13 +28,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
-
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import de.gessnerfl.fakesmtp.model.Email;
+import de.gessnerfl.fakesmtp.repository.EmailRepository;
 
 @ActiveProfiles("integrationtest")
 @RunWith(SpringRunner.class)
@@ -122,12 +128,10 @@ public class EmailControllerMVCIntegrationTest {
         Date receivedOn = Date.from(localDateTime.atZone(ZoneOffset.systemDefault()).toInstant());
         Email mail = new Email();
         mail.setSubject("Test Subject "+randomToken);
-        mail.setContent("Test Content "+randomToken);
         mail.setRawData("Test Content "+randomToken);
         mail.setReceivedOn(receivedOn);
         mail.setFromAddress("sender@example.com");
         mail.setToAddress("receiver@example.com");
-        mail.setContentType(ContentType.PLAIN);
         return emailRepository.save(mail);
     }
 
