@@ -1,5 +1,12 @@
 # Fake SMTP Server
+
+NOTE: This README.md is not yet updated
+
+Forked Repository
 [![Build Status](https://travis-ci.org/gessnerfl/fake-smtp-server.svg?branch=master)](https://travis-ci.org/gessnerfl/fake-smtp-server)
+
+This Repository
+[![Build Status](https://travis-ci.org/ltlynxus/fake-smtp-server.svg?branch=master)](https://travis-ci.org/ltlynxus/fake-smtp-server)
 
 *Simple SMTP Server which stores all received emails in an in-memory database and renders the emails in a web interface*
 
